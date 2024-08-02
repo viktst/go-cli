@@ -32,9 +32,9 @@ var FetchCommand = &cli.Command{
 	Usage:       "Fetch a fact about a number",
 	Description: "..",
 	Flags: []cli.Flag{
-		&cli.IntFlag{Name: "number", Value: 0, Usage: "Number to fetch a fact about"},
-		&cli.StringFlag{Name: "type", Value: Math, Usage: "Type of fact"},
-		&cli.BoolFlag{Name: "random", Value: false, Usage: "Fetch a random fact"},
+		&cli.IntFlag{Name: "number", Value: 0, Usage: "Number to fetch a fact about", Aliases: []string{"n"}},
+		&cli.StringFlag{Name: "type", Value: Math, Usage: "Type of fact", Aliases: []string{"t"}},
+		&cli.BoolFlag{Name: "random", Value: false, Usage: "Fetch a random fact", Aliases: []string{"r"}},
 	},
 	Action: func(c *cli.Context) error {
 		if c.Bool("random") && c.Int("number") != 0 {
