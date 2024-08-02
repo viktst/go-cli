@@ -41,6 +41,10 @@ var FetchCommand = &cli.Command{
 			return fmt.Errorf("err: --random and --number cannot be used together")
 		}
 
+		if !c.Bool("random") && c.Int("number") == 0 {
+			return fmt.Errorf("err: --random or --number must be specified to fetch a fact")
+		}
+
 		number := GetNumber(c)
 		factType := FactType(c.String("type"))
 
@@ -49,13 +53,11 @@ var FetchCommand = &cli.Command{
 		}
 
 		fact, err := fetchers.GetFacts(number, string(factType))
-
 		if err != nil {
 			return fmt.Errorf("failed to fetch fact: %w", err)
 		}
 
-		fmt.Println(fact)
-
+		fmt.Println(fact) // Output
 		return nil
 	},
 }
