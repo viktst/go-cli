@@ -23,6 +23,36 @@ func main() {
 		Commands: []*cli.Command{
 			commands.FetchCommand,
 		},
+		CustomAppHelpTemplate: `
+		NAME:
+		{{.Name}}{{if .Usage}} - {{.Usage}}{{end}}
+
+		USAGE:
+		{{.Name}} 
+
+		VERSION:
+		{{.Version}}
+
+		AUTHOR:
+		{{if .Authors}}
+		{{range $index, $author := .Authors}}{{if $index}}, {{end}}{{.Name}}{{end}}
+		{{end}}
+
+		COMMANDS:
+		{{range .Commands}}
+		{{.Name}}{{if .Usage}} - {{.Usage}}{{end}}
+		{{end}}
+
+		GLOBAL OPTIONS:
+		{{range .VisibleFlags}}
+		{{.}}
+		{{end}}
+
+		EXAMPLES:
+		go run cmd/root.go fetch --number 23 --type math
+		go run cmd/root.go fetch --random
+		go run cmd/root.go fetch --random --type trivia
+		`,
 	}
 
 	if err := app.Run(os.Args); err != nil {
