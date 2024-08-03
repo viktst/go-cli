@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go-cli/fetchers"
 
+	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 )
 
@@ -37,27 +38,30 @@ var FetchCommand = &cli.Command{
 		&cli.BoolFlag{Name: "random", Value: false, Usage: "Fetch a random fact", Aliases: []string{"r"}},
 	},
 	Action: func(c *cli.Context) error {
+		errOutput := color.New(color.FgRed).SprintFunc()
+		output := color.New(color.FgMagenta).SprintFunc()
+
 		if c.Bool("random") && c.Int("number") != 0 {
-			return fmt.Errorf("err: --random and --number cannot be used together")
+			return fmt.Errorf(errOutput("err: --random and --number cannot be used together"))
 		}
 
 		if !c.Bool("random") && c.Int("number") == 0 {
-			return fmt.Errorf("err: --random or --number must be specified to fetch a fact")
+			return fmt.Errorf(errOutput("err: --random or --number must be specified to fetch a fact"))
 		}
 
 		number := GetNumber(c)
 		factType := FactType(c.String("type"))
 
 		if !factType.IsValid() {
-			return fmt.Errorf("invalid fact type: %s", factType)
+			return fmt.Errorf(errOutput("invalid fact type: %s", factType))
 		}
 
 		fact, err := fetchers.GetFacts(number, string(factType))
 		if err != nil {
-			return fmt.Errorf("failed to fetch fact: %w", err)
+			return fmt.Errorf(errOutput("failed to fetch fact: %w", err))
 		}
 
-		fmt.Println(fact) // Output
+		fmt.Println(output(fact)) // Output
 		return nil
 	},
 }
