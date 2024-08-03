@@ -19,7 +19,7 @@ A terminal-based app retrieving interesting facts about numbers.
 3. Execute the `root.go` file to access the help menu, also u can use `fetch --help` to view all available commands and their descriptions
 
 ### Flags
-- `--number`, -n int: The number to fetch a fact about. If this is provided, `--random` cannot be used. (ex. `-n 1010`)
+- `--number`, `-n` int: The number to fetch a fact about. If this is provided, `--random` cannot be used. (ex. `-n 1010`)
 
 - `--type`, `-t` string: The type of fact to fetch. Valid values are math, trivia, date, year. Default is math. (ex. `-t trivia`)
 
